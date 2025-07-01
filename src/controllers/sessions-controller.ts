@@ -3,6 +3,8 @@ import { AppError } from "@/utils/AppError"
 import { compare } from "bcrypt"
 import { Request, Response } from "express"
 import z from "zod"
+import { authConfig } from "@/configs/auth"
+import { sign } from "jsonwebtoken"
 
 class SessionsController {
   async create(request: Request, response: Response) {
@@ -27,7 +29,16 @@ class SessionsController {
       throw new AppError("Email ou senha inválidos", 401)
     }
 
-    return response.status(200).json({ message: "usuário logado!" })
+    const { secret, expiresIn } = authConfig.jwt
+
+    const token = sign({ role: user.role }, secret, {
+      subject: user.id,
+      expiresIn,
+    })
+
+    const { password: _, ...userWithouPassoword } = user
+
+    return response.status(200).json({ token, userWithouPassoword })
   }
 }
 export { SessionsController }
