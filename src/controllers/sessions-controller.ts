@@ -38,7 +38,7 @@ class SessionsController {
 
     const { password: _, ...userWithouPassoword } = user
 
-    response.status(200).json({ token, userWithouPassoword })
+    response.status(200).json({ token, user: userWithouPassoword })
   }
 }
 export { SessionsController }

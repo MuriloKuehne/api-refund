@@ -2,12 +2,16 @@ import { Router } from "express"
 import { usersRoutes } from "./users-routes"
 import { sessionsRoutes } from "./sessions-routes"
 import { refundsRoutes } from "./refunds-controller"
+import { ensureAuthenticated } from "@/middlwares/ensure-authenticated"
 
 const routes = Router()
 
 //rotas públicas
-routes.use("/users", usersRoutes)
+routes.use("/users", usersRoutes) // this does not need to be authenticated
 routes.use("/sessions", sessionsRoutes)
-routes.use("/refunds", refundsRoutes)
+
+//Rota Privadas
+routes.use(ensureAuthenticated) // only called after this line
+routes.use("/refunds", refundsRoutes) // this needs to be authenticated
 
 export { routes }
