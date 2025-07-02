@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { usersRoutes } from "./users-routes"
 import { sessionsRoutes } from "./sessions-routes"
-import { refundsRoutes } from "./refunds-controller"
+import { refundsRoutes } from "./refunds-routes"
 import { ensureAuthenticated } from "@/middlwares/ensure-authenticated"
 
 const routes = Router()
