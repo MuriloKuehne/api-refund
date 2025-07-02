@@ -10,5 +10,10 @@ refundsRoutes.post(
   verifyUserAuthorization(["employee"]), //verifica se o usuário é (employee)
   refundsController.create
 )
+refundsRoutes.get(
+  "/",
+  verifyUserAuthorization(["manager"]), //verifica se o usuário é (manager)
+  refundsController.index
+)
 
 export { refundsRoutes }
