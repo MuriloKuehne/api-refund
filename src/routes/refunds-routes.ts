@@ -7,12 +7,12 @@ const refundsController = new RefundsController()
 
 refundsRoutes.post(
   "/",
-  verifyUserAuthorization(["employee"]), //verifica se o usuário é (employee)
+  verifyUserAuthorization(["employee", "admin"]), //verifica se o usuário é (employee)
   refundsController.create
 )
 refundsRoutes.get(
   "/",
-  verifyUserAuthorization(["manager"]), //verifica se o usuário é (manager)
+  verifyUserAuthorization(["manager", "admin"]), //verifica se o usuário é (manager)
   refundsController.index
 )
 
