@@ -1,6 +1,8 @@
 import { Request, Response } from "express"
 import z from "zod"
 import { Category } from "@prisma/client"
+import { prisma } from "@/database/prisma"
+import { AppError } from "@/utils/AppError"
 
 class RefundsController {
   async create(request: Request, response: Response) {
@@ -17,7 +19,17 @@ class RefundsController {
       filename: z.string().min(20),
     })
 
-    response.json({ message: "ok" })
+    const { amount, category, filename, name } = bodySchema.parse(request.body)
+
+    if (!request.user?.id) {
+      throw new AppError("Unauthorized", 401)
+    }
+
+    const refund = await prisma.refunds.create({
+      data: { name, category, amount, filename, userId: request.user.id },
+    })
+
+    response.status(201).json(refund)
   }
 }
 export { RefundsController }
