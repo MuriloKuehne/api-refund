@@ -1,7 +1,6 @@
 import multer from "multer"
 import path from "node:path"
 import crypto from "node:crypto"
-import { request } from "node:http"
 
 const TMP_FOLDER = path.resolve(__dirname, "..", "..", "tmp")
 
@@ -17,7 +16,7 @@ const ACCEPTED_IMAGE_TYPES = [
 ]
 
 const MULTER = {
-  Storage: multer.diskStorage({
+  storage: multer.diskStorage({
     destination: TMP_FOLDER,
     filename(request, file, callback) {
       const fileHash = crypto.randomBytes(10).toString("hex")
@@ -28,7 +27,7 @@ const MULTER = {
   }),
 }
 
-export {
+export default {
   TMP_FOLDER,
   UPLOADS_FOLDER,
   MULTER,
