@@ -15,5 +15,10 @@ refundsRoutes.get(
   verifyUserAuthorization(["manager", "admin"]), //verifica se o usuário é (manager)
   refundsController.index
 )
+refundsRoutes.get(
+  "/:id",
+  verifyUserAuthorization(["manager", "admin", "employee"]), //verifica se o usuário é (manager)
+  refundsController.show
+)
 
 export { refundsRoutes }
